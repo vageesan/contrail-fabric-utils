@@ -172,6 +172,17 @@ def all_reimage(build_param="@LATEST"):
 
 @roles('build')
 @task
+def all_sm_reimage_cluster(build_param):
+
+  build_params = build_param(",")
+  cluster_name = build_params[0]
+  image        = build_params[1]
+  local("server-manager reimage --no_confirm --cluster_id %s %s"%(cluster_name,image))
+
+
+
+@roles('build')
+@task
 def all_sm_reimage(build_param=None):
     hosts = env.roledefs['all'][:]
     esxi_hosts = getattr(testbed, 'esxi_hosts', None)
